@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mavridis Soda Logic - Pro</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #f1f5f9; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .container { background: #1e293b; width: 100%; max-width: 500px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
+        h1 { color: #38bdf8; text-align: center; font-size: 1.4rem; margin-bottom: 5px; text-transform: uppercase; }
+        .login-screen { text-align: center; padding: 40px 20px; }
+        .input-card { background: #334155; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #475569; }
+        label { display: block; font-size: 0.75rem; color: #38bdf8; margin-bottom: 4px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #1e293b; background: #0f172a; color: white; font-size: 1rem; box-sizing: border-box; }
+        button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-calc { background: #0ea5e9; color: white; }
+        .btn-save { background: #10b981; color: white; margin-top: 10px; }
+        .btn-print { background: #6366f1; color: white; margin-top: 5px; }
+        .results { margin-top: 15px; padding: 15px; background: #064e3b; border-radius: 12px; border: 1px solid #10b981; display: none; }
+        .res-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #065f46; }
+        .cost-tag { color: #fbbf24; font-weight: bold; font-size: 1.1rem; text-align: center; margin-top: 10px; }
+        #mainApp { display: none; }
+        .history { margin-top: 20px; width: 100%; max-width: 500px; font-size: 0.85rem; }
+        @media print { .btn-calc, .btn-save, .btn-print, .input-card, h3, .login-screen { display: none !important; } .results { display: block !important; color: black; background: white; border: none; } }
+    </style>
+</head>
+<body>
+
+    <div id="loginScreen" class="container login-screen">
+        <h1>🔐 Mavridis Logic</h1>
+        <p style="color: #94a3b8;">Εισάγετε κωδικό για πρόσβαση</p>
+        <input type="password" id="passInput" placeholder="Κωδικός...">
+        <button class="btn-calc" onclick="checkPass()">ΕΙΣΟΔΟΣ</button>
+    </div>
+
+    <div id="mainApp" class="container">
+        <h1>🥤 MAVRIDIS SODA PRO</h1>
+        <p style="text-align: center; font-size: 0.8rem; color: #94a3b8;">Κόστος & Ιστορικό Παραγωγής</p>
+
+        <div class="input-card"><label>ΛΙΤΡΑ ΠΑΡΑΓΩΓΗΣ</label><input type="number" id="liters" value="20"></div>
+        <div class="input-card"><label>BRIX ΡΟΔΙ</label><input type="number" id="brixPom" value="30"></div>
+        <div class="input-card"><label>BRIX ΤΣΑΪ+ΜΑΤΕ</label><input type="number" id="brixTea" value="29"></div>
+        <div class="input-card"><label>BRIX ΚΟΛΑ</label><input type="number" id="brixCola" value="26"></div>
+        <div class="input-card"><label>ΚΟΣΤΟΣ ΑΝΑ ΛΙΤΡΟ (€)</label><input type="number" id="costPerL" value="0.45" step="0.01"></div>
+
+        <button class="btn-calc" onclick="calculate()">ΥΠΟΛΟΓΙΣΜΟΣ</button>
+
+        <div id="results" class="results">
+            <h3 style="margin:0 0 10px 0; text-align:center;">ΣΥΝΤΑΓΗ</h3>
+            <div class="res-item"><span>Εκχύλισμα Ρόδι:</span> <span id="outPom"></span> ml</div>
+            <div class="res-item"><span>Τσάι + Μάτε:</span> <span id="outTea"></span> ml</div>
+            <div class="res-item"><span>Καρύδη Κόλα:</span> <span id="outCola"></span> ml</div>
+            <div class="res-item"><span>Διάλυμα Τανίνης:</span> <span id="outTan"></span> ml</div>
+            <div class="cost-tag" id="totalCostText"></div>
+            
+            <button class="btn-save" onclick="saveToHistory()">ΑΠΟΘΗΚΕΥΣΗ</button>
+            <button class="btn-print" onclick="window.print()">ΕΚΤΥΠΩΣΗ / PDF</button>
+        </div>
+
+        <div class="history">
+            <h3 style="color: #94a3b8; border-bottom: 1px solid #334155;">ΠΡΟΣΦΑΤΕΣ ΠΑΡΤΙΔΕΣ</h3>
+            <div id="logContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // ΟΡΙΣΤΕ ΤΟΝ ΚΩΔΙΚΟ ΣΑΣ ΕΔΩ
+        const MY_PASS = "1234"; 
+
+        function checkPass() {
+            if(document.getElementById('passInput').value === MY_PASS) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                renderHistory();
+            } else { alert("Λάθος Κωδικός!"); }
+        }
+
+        function calculate() {
+            const masterBrix = { cola: 26, tea: 29, pom: 30, tan: 41 };
+            const masterMl = { cola: 5, tea: 5, pom: 5, tan: 2 };
+
+            let L = parseFloat(document.getElementById('liters').value);
+            let costL = parseFloat(document.getElementById('costPerL').value);
+            
+            let b = {
+                pom: parseFloat(document.getElementById('brixPom').value),
+                tea: parseFloat(document.getElementById('brixTea').value),
+                cola: parseFloat(document.getElementById('brixCola').value),
+                tan: 41 // Σταθερό
+            };
+
+            let res = {
+                pom: (masterBrix.pom / b.pom) * masterMl.pom * (L / 20),
+                tea: (masterBrix.tea / b.tea) * masterMl.tea * (L / 20),
+                cola: (masterBrix.cola / b.cola) * masterMl.cola * (L / 20),
+                tan: (masterBrix.tan / 41) * masterMl.tan * (L / 20)
+            };
+
+            document.getElementById('outPom').innerText = res.pom.toFixed(2);
+            document.getElementById('outTea').innerText = res.tea.toFixed(2);
+            document.getElementById('outCola').innerText = res.cola.toFixed(2);
+            document.getElementById('outTan').innerText = res.tan.toFixed(2);
+            
+            let totalCost = L * costL;
+            document.getElementById('totalCostText').innerText = "Συνολικό Κόστος: " + totalCost.toFixed(2) + "€";
+            
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function saveToHistory() {
+            let log = `Παρτίδα ${document.getElementById('liters').value}L - ${document.getElementById('totalCostText').innerText}`;
+            let history = JSON.parse(localStorage.getItem('mavridisLog') || "[]");
+            history.unshift({date: new Date().toLocaleString('el-GR'), data: log});
+            localStorage.setItem('mavridisLog', JSON.stringify(history.slice(0, 5)));
+            renderHistory();
+            alert("Η συνταγή αποθηκεύτηκε!");
+        }
+
+        function renderHistory() {
+            let history = JSON.parse(localStorage.getItem('mavridisLog') || "[]");
+            document.getElementById('logContainer').innerHTML = history.map(item => `
+                <div style="background:#0f172a; padding:8px; border-radius:8px; margin-top:5px; border-left:3px solid #10b981;">
+                    <span style="color:#38bdf8; font-size:0.75rem;">${item.date}</span><br>${item.data}
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
