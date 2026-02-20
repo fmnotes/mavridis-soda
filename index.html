@@ -2,12 +2,19 @@
 <html lang="el">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mavridis Soda Logic - Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mavridis Soda Pro</title>
+
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="apple-touch-icon-precomposed" href="icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Soda Pro">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #f1f5f9; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .container { background: #1e293b; width: 100%; max-width: 500px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
-        h1 { color: #38bdf8; text-align: center; font-size: 1.4rem; margin-bottom: 5px; text-transform: uppercase; }
+        h1 { color: #38bdf8; text-align: center; font-size: 1.4rem; margin-bottom: 5px; text-transform: none; } 
         .login-screen { text-align: center; padding: 40px 20px; }
         .input-card { background: #334155; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #475569; }
         label { display: block; font-size: 0.75rem; color: #38bdf8; margin-bottom: 4px; font-weight: bold; }
@@ -27,14 +34,15 @@
 <body>
 
     <div id="loginScreen" class="container login-screen">
-        <h1>🔐 Mavridis Logic</h1>
+        <img src="icon.png" width="80" style="margin-bottom:15px; border-radius:15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+        <h1>Mavridis Logic</h1>
         <p style="color: #94a3b8;">Εισάγετε κωδικό για πρόσβαση</p>
-        <input type="password" id="passInput" placeholder="Κωδικός...">
-        <button class="btn-calc" onclick="checkPass()">ΕΙΣΟΔΟΣ</button>
+        <input type="password" id="passInput" placeholder="Κωδικός..." inputmode="numeric">
+        <button class="btn-calc" onclick="checkPass()">Είσοδος</button>
     </div>
 
     <div id="mainApp" class="container">
-        <h1>🥤 MAVRIDIS SODA PRO</h1>
+        <h1>Mavridis Soda Pro</h1>
         <p style="text-align: center; font-size: 0.8rem; color: #94a3b8;">Κόστος & Ιστορικό Παραγωγής</p>
 
         <div class="input-card"><label>ΛΙΤΡΑ ΠΑΡΑΓΩΓΗΣ</label><input type="number" id="liters" value="20"></div>
@@ -64,8 +72,11 @@
     </div>
 
     <script>
-        // ΟΡΙΣΤΕ ΤΟΝ ΚΩΔΙΚΟ ΣΑΣ ΕΔΩ
-        const MY_PASS = "1234"; 
+        const MY_PASS = "1984"; 
+
+        document.getElementById('passInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPass();
+        });
 
         function checkPass() {
             if(document.getElementById('passInput').value === MY_PASS) {
@@ -78,32 +89,26 @@
         function calculate() {
             const masterBrix = { cola: 26, tea: 29, pom: 30, tan: 41 };
             const masterMl = { cola: 5, tea: 5, pom: 5, tan: 2 };
-
             let L = parseFloat(document.getElementById('liters').value);
             let costL = parseFloat(document.getElementById('costPerL').value);
-            
             let b = {
                 pom: parseFloat(document.getElementById('brixPom').value),
                 tea: parseFloat(document.getElementById('brixTea').value),
                 cola: parseFloat(document.getElementById('brixCola').value),
-                tan: 41 // Σταθερό
+                tan: 41 
             };
-
             let res = {
                 pom: (masterBrix.pom / b.pom) * masterMl.pom * (L / 20),
                 tea: (masterBrix.tea / b.tea) * masterMl.tea * (L / 20),
                 cola: (masterBrix.cola / b.cola) * masterMl.cola * (L / 20),
                 tan: (masterBrix.tan / 41) * masterMl.tan * (L / 20)
             };
-
             document.getElementById('outPom').innerText = res.pom.toFixed(2);
             document.getElementById('outTea').innerText = res.tea.toFixed(2);
             document.getElementById('outCola').innerText = res.cola.toFixed(2);
             document.getElementById('outTan').innerText = res.tan.toFixed(2);
-            
             let totalCost = L * costL;
             document.getElementById('totalCostText').innerText = "Συνολικό Κόστος: " + totalCost.toFixed(2) + "€";
-            
             document.getElementById('results').style.display = 'block';
         }
 
