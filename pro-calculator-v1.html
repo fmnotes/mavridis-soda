@@ -12,10 +12,10 @@
     <style>
         :root {
             --primary: #38bdf8;
-            --pom: #ef4444; /* Κόκκινο Ρόδι */
-            --tea: #10b981; /* Πράσινο Τσάι */
-            --cola: #a8a29e; /* Χρώμα Κόλας */
-            --lime: #84cc16; /* Πράσινο Λάιμ */
+            --pom: #ef4444; 
+            --tea: #10b981; 
+            --cola: #a8a29e; 
+            --lime: #32CD32; /* ΕΝΤΟΝΟ ΠΡΑΣΙΝΟ ΛΑΪΜ */
             --bg: #0f172a;
             --card: #1e293b;
             --accent: #fbbf24;
@@ -39,7 +39,6 @@
         .login-screen { text-align: center; padding: 50px 20px; }
         .logo-img { width: 110px; height: 110px; margin-bottom: 20px; border-radius: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.5); border: 2px solid var(--primary); object-fit: cover; }
         
-        /* Στυλ Καρτών Εισαγωγής */
         .input-group { background: #334155; padding: 14px; border-radius: 18px; margin-bottom: 12px; border-left: 5px solid var(--primary); transition: 0.3s; }
         .group-pom { border-left-color: var(--pom); }
         .group-tea { border-left-color: var(--tea); }
@@ -51,12 +50,12 @@
         
         button { width: 100%; padding: 18px; border: none; border-radius: 15px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .btn-main { background: linear-gradient(135deg, #38bdf8, #0284c7); color: white; }
-        .btn-agar { background: linear-gradient(135deg, #84cc16, #4d7c0f); color: white; }
+        .btn-agar { background: linear-gradient(135deg, #32CD32, #228B22); color: white; }
         .btn-save { background: #10b981; color: white; margin-top: 15px; }
         .btn-print { background: #475569; color: white; margin-top: 10px; font-size: 0.85rem; opacity: 0.8; }
         
         .results { margin-top: 20px; padding: 20px; background: #064e3b; border-radius: 22px; border: 1px solid #10b981; display: none; animation: fadeIn 0.4s ease; }
-        .results-agar { background: #14532d; border-color: var(--lime); }
+        .results-agar { background: #064e3b; border-color: var(--lime); }
         
         .res-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 1.1rem; }
         .res-val { font-weight: 800; color: var(--accent); }
@@ -199,4 +198,3 @@
     </script>
 </body>
 </html>
-
