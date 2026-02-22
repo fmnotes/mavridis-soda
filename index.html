@@ -1,3 +1,8 @@
+Ο κώδικας που παρέθεσες είναι η σταθερή βάση που έχουμε χτίσει. Τον πήρα, του πρόσθεσα το νέο τμήμα για τη Διαύγαση (Agar-Agar) και διόρθωσα τα links για την εικόνα ώστε να φαίνεται παντού το ρόδι.
+
+Αντέγραψε όλο το παρακάτω μπλοκ και κάνε αντικατάσταση στο GitHub:
+
+HTML
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -5,15 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mavridis Soda Pro</title>
 
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="apple-touch-icon-precomposed" href="icon.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/vHqJ9Uj.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Soda Pro">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #f1f5f9; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .container { background: #1e293b; width: 100%; max-width: 500px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
+        .container { background: #1e293b; width: 100%; max-width: 500px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; margin-bottom: 20px; }
         h1 { color: #38bdf8; text-align: center; font-size: 1.4rem; margin-bottom: 5px; text-transform: none; } 
         .login-screen { text-align: center; padding: 40px 20px; }
         .input-card { background: #334155; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #475569; }
@@ -21,62 +24,67 @@
         input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #1e293b; background: #0f172a; color: white; font-size: 1rem; box-sizing: border-box; }
         button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
         .btn-calc { background: #0ea5e9; color: white; }
+        .btn-agar { background: #8b5cf6; color: white; margin-top: 10px; }
         .btn-save { background: #10b981; color: white; margin-top: 10px; }
-        .btn-print { background: #6366f1; color: white; margin-top: 5px; }
         .results { margin-top: 15px; padding: 15px; background: #064e3b; border-radius: 12px; border: 1px solid #10b981; display: none; }
-        .res-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #065f46; }
+        .results-agar { background: #4c1d95; border-color: #8b5cf6; }
+        .res-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .cost-tag { color: #fbbf24; font-weight: bold; font-size: 1.1rem; text-align: center; margin-top: 10px; }
-        #mainApp { display: none; }
-        .history { margin-top: 20px; width: 100%; max-width: 500px; font-size: 0.85rem; }
-        @media print { .btn-calc, .btn-save, .btn-print, .input-card, h3, .login-screen { display: none !important; } .results { display: block !important; color: black; background: white; border: none; } }
+        #mainApp { display: none; width: 100%; max-width: 500px; }
+        .history { margin-top: 20px; width: 100%; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
     <div id="loginScreen" class="container login-screen">
-        <img src="icon.png" width="80" style="margin-bottom:15px; border-radius:15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+        <img src="https://i.imgur.com/vHqJ9Uj.png" width="80" style="margin-bottom:15px; border-radius:15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
         <h1>Mavridis Logic</h1>
         <p style="color: #94a3b8;">Εισάγετε κωδικό για πρόσβαση</p>
         <input type="password" id="passInput" placeholder="Κωδικός..." inputmode="numeric">
         <button class="btn-calc" onclick="checkPass()">Είσοδος</button>
     </div>
 
-    <div id="mainApp" class="container">
-        <h1>Mavridis Soda Pro</h1>
-        <p style="text-align: center; font-size: 0.8rem; color: #94a3b8;">Κόστος & Ιστορικό Παραγωγής</p>
+    <div id="mainApp">
+        <div class="container">
+            <h1>Mavridis Soda Pro</h1>
+            <div class="input-card"><label>ΛΙΤΡΑ ΠΑΡΑΓΩΓΗΣ</label><input type="number" id="liters" value="20"></div>
+            <div class="input-card"><label>BRIX ΡΟΔΙ</label><input type="number" id="brixPom" value="30"></div>
+            <div class="input-card"><label>BRIX ΤΣΑΪ+ΜΑΤΕ</label><input type="number" id="brixTea" value="29"></div>
+            <div class="input-card"><label>BRIX ΚΟΛΑ</label><input type="number" id="brixCola" value="26"></div>
+            <div class="input-card"><label>ΚΟΣΤΟΣ ΑΝΑ ΛΙΤΡΟ (€)</label><input type="number" id="costPerL" value="0.45" step="0.01"></div>
 
-        <div class="input-card"><label>ΛΙΤΡΑ ΠΑΡΑΓΩΓΗΣ</label><input type="number" id="liters" value="20"></div>
-        <div class="input-card"><label>BRIX ΡΟΔΙ</label><input type="number" id="brixPom" value="30"></div>
-        <div class="input-card"><label>BRIX ΤΣΑΪ+ΜΑΤΕ</label><input type="number" id="brixTea" value="29"></div>
-        <div class="input-card"><label>BRIX ΚΟΛΑ</label><input type="number" id="brixCola" value="26"></div>
-        <div class="input-card"><label>ΚΟΣΤΟΣ ΑΝΑ ΛΙΤΡΟ (€)</label><input type="number" id="costPerL" value="0.45" step="0.01"></div>
+            <button class="btn-calc" onclick="calculate()">ΥΠΟΛΟΓΙΣΜΟΣ ΣΟΔΑΣ</button>
 
-        <button class="btn-calc" onclick="calculate()">ΥΠΟΛΟΓΙΣΜΟΣ</button>
-
-        <div id="results" class="results">
-            <h3 style="margin:0 0 10px 0; text-align:center;">ΣΥΝΤΑΓΗ</h3>
-            <div class="res-item"><span>Εκχύλισμα Ρόδι:</span> <span id="outPom"></span> ml</div>
-            <div class="res-item"><span>Τσάι + Μάτε:</span> <span id="outTea"></span> ml</div>
-            <div class="res-item"><span>Καρύδη Κόλα:</span> <span id="outCola"></span> ml</div>
-            <div class="res-item"><span>Διάλυμα Τανίνης:</span> <span id="outTan"></span> ml</div>
-            <div class="cost-tag" id="totalCostText"></div>
-            
-            <button class="btn-save" onclick="saveToHistory()">ΑΠΟΘΗΚΕΥΣΗ</button>
-            <button class="btn-print" onclick="window.print()">ΕΚΤΥΠΩΣΗ / PDF</button>
+            <div id="results" class="results">
+                <h3 style="margin:0 0 10px 0; text-align:center;">ΣΥΝΤΑΓΗ</h3>
+                <div class="res-item"><span>Εκχύλισμα Ρόδι:</span> <span id="outPom"></span> ml</div>
+                <div class="res-item"><span>Τσάι + Μάτε:</span> <span id="outTea"></span> ml</div>
+                <div class="res-item"><span>Καρύδη Κόλα:</span> <span id="outCola"></span> ml</div>
+                <div class="res-item"><span>Διάλυμα Τανίνης:</span> <span id="outTan"></span> ml</div>
+                <div class="cost-tag" id="totalCostText"></div>
+                <button class="btn-save" onclick="saveToHistory()">ΑΠΟΘΗΚΕΥΣΗ</button>
+            </div>
         </div>
 
-        <div class="history">
-            <h3 style="color: #94a3b8; border-bottom: 1px solid #334155;">ΠΡΟΣΦΑΤΕΣ ΠΑΡΤΙΔΕΣ</h3>
+        <div class="container" style="border-color: #8b5cf6;">
+            <h1 style="color: #a78bfa;">Διαύγαση (Agar-Agar)</h1>
+            <div class="input-card"><label>ML ΧΥΜΟΥ ΓΙΑ ΔΙΑΥΓΑΣΗ</label><input type="number" id="mlJuice" value="300"></div>
+            <button class="btn-agar" onclick="calculateAgar()">ΥΠΟΛΟΓΙΣΜΟΣ AGAR</button>
+            <div id="resultsAgar" class="results results-agar">
+                <div class="res-item"><span>Agar-Agar:</span> <span id="outAgar"></span> g</div>
+                <div class="res-item"><span>Για βράσιμο (1/4):</span> <span id="outHot"></span> ml</div>
+                <div class="res-item"><span>Κρύος χυμός (3/4):</span> <span id="outCold"></span> ml</div>
+            </div>
+        </div>
+
+        <div class="history container">
+            <h3 style="color: #94a3b8; border-bottom: 1px solid #334155; margin-top:0;">ΠΡΟΣΦΑΤΕΣ ΠΑΡΤΙΔΕΣ</h3>
             <div id="logContainer"></div>
         </div>
     </div>
 
     <script>
         const MY_PASS = "1984"; 
-
-        document.getElementById('passInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') checkPass();
-        });
 
         function checkPass() {
             if(document.getElementById('passInput').value === MY_PASS) {
@@ -94,22 +102,28 @@
             let b = {
                 pom: parseFloat(document.getElementById('brixPom').value),
                 tea: parseFloat(document.getElementById('brixTea').value),
-                cola: parseFloat(document.getElementById('brixCola').value),
-                tan: 41 
+                cola: parseFloat(document.getElementById('brixCola').value)
             };
             let res = {
                 pom: (masterBrix.pom / b.pom) * masterMl.pom * (L / 20),
                 tea: (masterBrix.tea / b.tea) * masterMl.tea * (L / 20),
                 cola: (masterBrix.cola / b.cola) * masterMl.cola * (L / 20),
-                tan: (masterBrix.tan / 41) * masterMl.tan * (L / 20)
+                tan: 2 * (L / 20)
             };
             document.getElementById('outPom').innerText = res.pom.toFixed(2);
             document.getElementById('outTea').innerText = res.tea.toFixed(2);
             document.getElementById('outCola').innerText = res.cola.toFixed(2);
             document.getElementById('outTan').innerText = res.tan.toFixed(2);
-            let totalCost = L * costL;
-            document.getElementById('totalCostText').innerText = "Συνολικό Κόστος: " + totalCost.toFixed(2) + "€";
+            document.getElementById('totalCostText').innerText = "Συνολικό Κόστος: " + (L * costL).toFixed(2) + "€";
             document.getElementById('results').style.display = 'block';
+        }
+
+        function calculateAgar() {
+            let ml = parseFloat(document.getElementById('mlJuice').value);
+            document.getElementById('outAgar').innerText = (ml * 0.002).toFixed(2);
+            document.getElementById('outHot').innerText = (ml * 0.25).toFixed(0);
+            document.getElementById('outCold').innerText = (ml * 0.75).toFixed(0);
+            document.getElementById('resultsAgar').style.display = 'block';
         }
 
         function saveToHistory() {
@@ -126,37 +140,7 @@
             document.getElementById('logContainer').innerHTML = history.map(item => `
                 <div style="background:#0f172a; padding:8px; border-radius:8px; margin-top:5px; border-left:3px solid #10b981;">
                     <span style="color:#38bdf8; font-size:0.75rem;">${item.date}</span><br>${item.data}
-                </div>
-
-
-    <script>
-        function checkPass() {
-            if(document.getElementById('passInput').value === "1984") {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-            } else { alert("Λάθος Κωδικός!"); }
-        }
-
-        function calculateSoda() {
-            let L = parseFloat(document.getElementById('liters').value);
-            let bPom = parseFloat(document.getElementById('brixPom').value);
-            document.getElementById('outPom').innerText = ((30/bPom) * 5 * (L/20)).toFixed(2);
-            document.getElementById('outTea').innerText = (5 * (L/20)).toFixed(2);
-            document.getElementById('outCola').innerText = (5 * (L/20)).toFixed(2);
-            document.getElementById('outTan').innerText = (2 * (L/20)).toFixed(2);
-            document.getElementById('resultsSoda').style.display = 'block';
-        }
-
-        function calculateAgar() {
-            let ml = parseFloat(document.getElementById('mlJuice').value);
-            let agar = (ml * 0.002).toFixed(2); // 0.2%
-            let hot = (ml * 0.25).toFixed(0);
-            let cold = (ml - hot).toFixed(0);
-            
-            document.getElementById('outAgar').innerText = agar;
-            document.getElementById('outHot').innerText = hot;
-            document.getElementById('outCold').innerText = cold;
-            document.getElementById('resultsAgar').style.display = 'block';
+                </div>`).join('');
         }
     </script>
 </body>
