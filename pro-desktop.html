@@ -21,6 +21,7 @@
             height: 100vh; 
             background-color: var(--bg-color);
             color: var(--text-main);
+            transition: 0.3s;
         }
 
         /* ΠΛΕΥΡΙΚΟ ΜΕΝΟΥ */
@@ -32,236 +33,82 @@
             padding: 40px 20px;
             box-shadow: 5px 0 15px rgba(0,0,0,0.3);
             color: white;
+            z-index: 10;
         }
 
-        .logo-area {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
+        .logo-area { text-align: center; margin-bottom: 40px; }
         .logo-box {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 15px;
-            border: 3px solid var(--lime-green);
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 0 20px rgba(50, 205, 50, 0.2);
+            width: 110px; height: 110px; margin: 0 auto 15px;
+            border: 3px solid var(--lime-green); border-radius: 25px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; background: #000; box-shadow: 0 0 20px rgba(50, 205, 50, 0.2);
         }
-
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .brand-name {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--logic-blue);
-            letter-spacing: 1px;
-        }
+        .brand-name { font-size: 1.6rem; font-weight: 800; color: var(--logic-blue); }
 
         .nav-item {
-            padding: 16px;
-            margin: 8px 0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 1rem;
-            color: #9ca3af;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 500;
+            padding: 16px; margin: 8px 0; border-radius: 12px; cursor: pointer;
+            transition: 0.3s; font-size: 1rem; color: #9ca3af; display: flex; align-items: center; gap: 12px;
         }
-
         .nav-item:hover { background: #262626; color: white; transform: translateX(5px); }
         .nav-active { border-left: 5px solid var(--lime-green); color: white; background: #262626; }
 
         /* ΚΥΡΙΩΣ ΠΕΡΙΕΧΟΜΕΝΟ */
-        .main-content {
-            flex: 1;
-            padding: 60px;
-            overflow-y: auto;
-            display: none; 
-        }
+        .main-content { flex: 1; padding: 60px; overflow-y: auto; display: none; }
+        .dashboard-header { margin-bottom: 40px; color: white; font-size: 2.2rem; font-weight: 800; display: flex; align-items: center; gap: 15px; }
+        .pro-badge { background: var(--lime-green); color: black; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; }
 
-        .dashboard-header {
-            margin-bottom: 40px;
-            color: white;
-            font-size: 2.2rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .pro-badge {
-            background: var(--lime-green);
-            color: black;
-            font-size: 0.8rem;
-            padding: 4px 10px;
-            border-radius: 6px;
-            vertical-align: middle;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 40px;
-            max-width: 1400px;
-        }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 40px; }
 
         /* ΚΑΡΤΕΣ */
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            border-top: 6px solid var(--logic-blue);
-        }
-
+        .card { background: var(--card-bg); border-radius: 20px; padding: 35px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border-top: 6px solid var(--logic-blue); }
         .card-lime { border-top-color: var(--lime-green); }
+        .card-title { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: 700; margin-bottom: 30px; }
 
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: #111827;
-        }
+        .input-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .input-row input { width: 180px; padding: 12px; border: 2px solid #f3f4f6; border-radius: 10px; text-align: center; font-size: 1.1rem; }
 
-        .input-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .input-row label { font-size: 0.95rem; color: #4b5563; font-weight: 600; }
-
-        .input-row input {
-            width: 200px;
-            padding: 12px;
-            border: 2px solid #f3f4f6;
-            border-radius: 10px;
-            background: #f9fafb;
-            font-size: 1.1rem;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .input-row input:focus { border-color: var(--logic-blue); outline: none; background: white; }
-
-        /* ΚΟΥΜΠΙΑ */
-        .btn-calc {
-            background-color: var(--lime-green);
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 20px;
-            width: 100%;
-            font-size: 1rem;
-            text-transform: uppercase;
-        }
-
+        .btn-calc { background: var(--lime-green); color: #000; border: none; padding: 15px; border-radius: 15px; font-weight: 800; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 20px; }
         .btn-calc:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(50, 205, 50, 0.4); }
 
-        /* ΑΠΟΤΕΛΕΣΜΑΤΑ */
-        .res-display {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px dashed #e5e7eb;
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
+        /* SETTINGS MODAL */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { background: white; padding: 40px; border-radius: 25px; width: 450px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
 
-        .res-line { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1.1rem; }
-        .res-val { color: #059669; font-weight: 800; }
-        .cost-box { 
-            background: #f0fdf4; 
-            padding: 15px; 
-            border-radius: 12px; 
-            text-align: center; 
-            margin-top: 15px; 
-            font-size: 1.3rem; 
-            font-weight: 800; 
-            color: #166534;
-            border: 1px solid #bbf7d0;
-        }
+        .res-display { margin-top: 25px; padding-top: 20px; border-top: 2px dashed #e5e7eb; display: none; }
+        .cost-box { background: #f0fdf4; padding: 15px; border-radius: 12px; text-align: center; margin-top: 15px; font-size: 1.3rem; font-weight: 800; color: #166534; border: 1px solid #bbf7d0; }
 
         /* ΕΙΣΟΔΟΣ */
-        .login-overlay {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-
-        .login-box-ui {
-            background: white;
-            padding: 50px;
-            border-radius: 30px;
-            text-align: center;
-            width: 400px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media print { .sidebar, .btn-calc { display: none !important; } .main-content { display: block !important; padding: 0; } }
+        .login-overlay { position: fixed; inset: 0; background: var(--bg-color); display: flex; justify-content: center; align-items: center; z-index: 999; }
+        .login-box-ui { background: white; padding: 50px; border-radius: 30px; text-align: center; width: 400px; }
     </style>
 </head>
 <body>
 
     <div id="loginScreen" class="login-overlay">
         <div class="login-box-ui">
-            <div class="logo-box" style="margin-bottom: 25px;">
-                <img src="icon.png" onerror="this.src='https://i.imgur.com/vHqJ9Uj.png'">
-            </div>
-            <h2 style="margin: 0;">Mavridis Logic</h2>
-            <p style="color: #6b7280; margin-top: 10px; margin-bottom: 30px;">Περιορισμένη πρόσβαση συστήματος</p>
-            <input type="password" id="passInput" placeholder="Κωδικός" style="width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #eee; text-align: center; font-size: 1.3rem; margin-bottom: 25px;">
-            <button class="btn-calc" onclick="checkPass()">ΕΙΣΟΔΟΣ ΣΤΟ ΣΥΣΤΗΜΑ</button>
+            <div class="logo-box" style="margin-bottom: 25px;"><img src="icon.png" onerror="this.src='https://i.imgur.com/vHqJ9Uj.png'"></div>
+            <h2>Mavridis Logic</h2>
+            <input type="password" id="passInput" placeholder="Κωδικός" style="width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #eee; text-align: center; font-size: 1.3rem; margin-top: 20px;">
+            <button class="btn-calc" onclick="checkPass()">ΕΙΣΟΔΟΣ</button>
         </div>
     </div>
 
     <div class="sidebar">
         <div class="logo-area">
-            <div class="logo-box">
-                <img src="icon.png" onerror="this.src='https://i.imgur.com/vHqJ9Uj.png'">
-            </div>
+            <div class="logo-box"><img src="icon.png" onerror="this.src='https://i.imgur.com/vHqJ9Uj.png'"></div>
             <div class="brand-name">Mavridis Logic</div>
         </div>
-        
-        <div class="nav-item nav-active">📊 Πίνακας Ελέγχου</div>
+        <div class="nav-item nav-active" onclick="closeSettings()">📊 Πίνακας Ελέγχου</div>
         <div class="nav-item">📅 Ιστορικό Παρτίδων</div>
-        <div class="nav-item">⚙️ Ρυθμίσεις</div>
+        <div class="nav-item" onclick="openSettings()">⚙️ Ρυθμίσεις Συστήματος</div>
         <div class="nav-item">💾 Αποθηκευμένες Συνταγές</div>
-        
-        <div style="margin-top: auto; font-size: 0.8rem; color: #444; text-align: center; border-top: 1px solid #222; pt: 20px;">
-            Mavridis Soda Pro Edition<br>© 2026 Έκδοση Υπολογιστή
-        </div>
+        <div style="margin-top: auto; font-size: 0.8rem; color: #444; text-align: center;">Mavridis Soda Pro © 2026</div>
     </div>
 
     <div class="main-content" id="mainApp">
-        <div class="dashboard-header">
-            Mavridis Soda <span style="color: var(--lime-green);">Pro</span>
-            <span class="pro-badge">ΕΠΑΓΓΕΛΜΑΤΙΚΟ</span>
-        </div>
-        
+        <div class="dashboard-header">Mavridis Soda <span style="color: var(--lime-green);">Pro</span> <span class="pro-badge">ΕΠΑΓΓΕΛΜΑΤΙΚΟ</span></div>
         <div class="grid-container">
-            
             <div class="card">
                 <div class="card-title">🍎 Κεντρικός Υπολογιστής</div>
                 <div class="input-row"><label>⚖️ Λίτρα Παραγωγής</label><input type="number" id="liters" value="20"></div>
@@ -269,78 +116,84 @@
                 <div class="input-row"><label>🍃 Brix Τσάι + Μάτε</label><input type="number" id="brixTea" value="29"></div>
                 <div class="input-row"><label>🥤 Brix Κόλα</label><input type="number" id="brixCola" value="26"></div>
                 <div class="input-row"><label>💰 Κόστος ανά Λίτρο (€)</label><input type="number" id="costPerL" value="0.45" step="0.01"></div>
-                
                 <button class="btn-calc" onclick="calculate()">ΕΚΤΕΛΕΣΗ ΥΠΟΛΟΓΙΣΜΟΥ</button>
-
                 <div id="results" class="res-display">
-                    <div class="res-line"><span>Εκχύλισμα Ρόδι:</span> <span class="res-val" id="outPom"></span> ml</div>
-                    <div class="res-line"><span>Τσάι + Μάτε:</span> <span class="res-val" id="outTea"></span> ml</div>
-                    <div class="res-line"><span>Καρύδη Κόλα:</span> <span class="res-val" id="outCola"></span> ml</div>
-                    <div class="res-line"><span>Διάλυμα Τανίνης:</span> <span class="res-val" id="outTan"></span> ml</div>
+                    <div id="resContainer"></div>
                     <div class="cost-box" id="totalCostText"></div>
                 </div>
             </div>
-
             <div class="card card-lime">
                 <div class="card-title">🌿 Διαύγαση χυμού Λάιμ</div>
                 <div class="input-row"><label>🧪 Συνολικός χυμός Λάιμ (ml)</label><input type="number" id="mlJuice" value="300"></div>
-                
                 <button class="btn-calc" onclick="calculateAgar()">ΥΠΟΛΟΓΙΣΜΟΣ AGAR-AGAR</button>
-
                 <div id="resultsAgar" class="res-display">
-                    <div class="res-line"><span>Άγαρ-Άγαρ (0.2%):</span> <span class="res-val" id="outAgar"></span> g</div>
-                    <div class="res-line"><span>🔥 Ποσότητα για Βράσιμο (1/4):</span> <span class="res-val" id="outHot"></span> ml</div>
-                    <div class="res-line"><span>❄️ Ποσότητα Κρύου Λάιμ (3/4):</span> <span class="res-val" id="outCold"></span> ml</div>
+                    <div id="resAgarContainer"></div>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2 style="border-bottom: 2px solid var(--logic-blue); padding-bottom: 10px;">⚙️ Ρυθμίσεις Brix Βάσης</h2>
+            <p style="font-size: 0.85rem; color: #666;">Ορίστε τις τιμές βάσης που χρησιμοποιεί ο αλγόριθμος:</p>
+            <div class="input-row"><label>Brix Βάσης Κόλα</label><input type="number" id="baseBrixCola" value="26"></div>
+            <div class="input-row"><label>Brix Βάσης Τσάι</label><input type="number" id="baseBrixTea" value="29"></div>
+            <div class="input-row"><label>Brix Βάσης Ρόδι</label><input type="number" id="baseBrixPom" value="30"></div>
+            <button class="btn-calc" onclick="closeSettings()">ΑΠΟΘΗΚΕΥΣΗ & ΕΠΙΣΤΡΟΦΗ</button>
         </div>
     </div>
 
     <script>
         const _0x5a1 = "MTk4NA=="; 
-
         function checkPass() {
-            const input = document.getElementById('passInput').value;
-            if(btoa(input) === _0x5a1) {
+            if(btoa(document.getElementById('passInput').value) === _0x5a1) {
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
-            } else { alert("Λάθος Κωδικός Πρόσβασης!"); }
+            } else { alert("Λάθος Κωδικός!"); }
         }
 
+        function openSettings() { document.getElementById('settingsModal').style.display = 'flex'; }
+        function closeSettings() { document.getElementById('settingsModal').style.display = 'none'; }
+
         function calculate() {
-            const mBrix = { cola: 26, tea: 29, pom: 30, tan: 41 };
-            const mMl = { cola: 5, tea: 5, pom: 5, tan: 2 };
+            const base = {
+                cola: parseFloat(document.getElementById('baseBrixCola').value),
+                tea: parseFloat(document.getElementById('baseBrixTea').value),
+                pom: parseFloat(document.getElementById('baseBrixPom').value),
+                tan: 41
+            };
             let L = parseFloat(document.getElementById('liters').value);
-            let costL = parseFloat(document.getElementById('costPerL').value);
             let bPom = parseFloat(document.getElementById('brixPom').value);
             let bTea = parseFloat(document.getElementById('brixTea').value);
             let bCola = parseFloat(document.getElementById('brixCola').value);
 
-            let resPom = (mBrix.pom / bPom) * mMl.pom * (L / 20);
-            let resTea = (mBrix.tea / bTea) * mMl.tea * (L / 20);
-            let resCola = (mBrix.cola / bCola) * mMl.cola * (L / 20);
-            let resTan = 2 * (L / 20);
+            let res = {
+                pom: (base.pom / bPom) * 5 * (L/20),
+                tea: (base.tea / bTea) * 5 * (L/20),
+                cola: (base.cola / bCola) * 5 * (L/20),
+                tan: 2 * (L/20)
+            };
 
-            document.getElementById('outPom').innerText = resPom.toFixed(2);
-            document.getElementById('outTea').innerText = resTea.toFixed(2);
-            document.getElementById('outCola').innerText = resCola.toFixed(2);
-            document.getElementById('outTan').innerText = resTan.toFixed(2);
-            document.getElementById('totalCostText').innerText = "Συνολικό Κόστος: " + (L * costL).toFixed(2) + "€";
+            document.getElementById('resContainer').innerHTML = `
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Εκχύλισμα Ρόδι:</span> <b>${res.pom.toFixed(2)} ml</b></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Τσάι + Μάτε:</span> <b>${res.tea.toFixed(2)} ml</b></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Καρύδη Κόλα:</span> <b>${res.cola.toFixed(2)} ml</b></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Διάλυμα Τανίνης:</span> <b>${res.tan.toFixed(2)} ml</b></div>
+            `;
+            document.getElementById('totalCostText').innerText = "Συνολικό Κόστος: " + (L * parseFloat(document.getElementById('costPerL').value)).toFixed(2) + "€";
             document.getElementById('results').style.display = 'block';
         }
 
         function calculateAgar() {
             let ml = parseFloat(document.getElementById('mlJuice').value);
-            document.getElementById('outAgar').innerText = (ml * 0.002).toFixed(3);
-            document.getElementById('outHot').innerText = (ml * 0.25).toFixed(0);
-            document.getElementById('outCold').innerText = (ml * 0.75).toFixed(0);
+            document.getElementById('resAgarContainer').innerHTML = `
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Άγαρ-Άγαρ:</span> <b>${(ml * 0.002).toFixed(3)} g</b></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>🔥 Βράσιμο:</span> <b>${(ml * 0.25).toFixed(0)} ml</b></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>❄️ Κρύο Λάιμ:</span> <b>${(ml * 0.75).toFixed(0)} ml</b></div>
+            `;
             document.getElementById('resultsAgar').style.display = 'block';
         }
-
-        document.getElementById('passInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') checkPass();
-        });
     </script>
 </body>
 </html>
