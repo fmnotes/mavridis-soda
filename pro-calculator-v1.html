@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mavridis Soda Pro</title>
+
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --secondary: #8b5cf6;
+            --accent: #fbbf24;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --success: #10b981;
+        }
+
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: #f1f5f9; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        
+        /* Στυλ για το Λογότυπο */
+        .brand-header { text-align: center; margin-bottom: 20px; }
+        .brand-title { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            background: linear-gradient(to right, #38bdf8, #fbbf24); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            margin: 10px 0;
+        }
+
+        .container { background: var(--card); width: 100%; max-width: 500px; padding: 25px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 1px solid #334155; margin-bottom: 20px; box-sizing: border-box; }
+        
+        .login-screen { text-align: center; padding: 50px 20px; }
+        .logo-img { width: 100px; height: 100px; margin-bottom: 20px; border-radius: 22px; box-shadow: 0 8px 25px rgba(0,0,0,0.5); border: 2px solid var(--primary); object-fit: cover; }
+        
+        .input-group { background: #334155; padding: 12px; border-radius: 15px; margin-bottom: 10px; border: 1px solid #475569; }
+        label { display: block; font-size: 0.7rem; color: var(--primary); margin-bottom: 5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #1e293b; background: #0f172a; color: white; font-size: 1.1rem; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+
+        button { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; text-transform: uppercase; }
+        .btn-main { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; }
+        .btn-agar { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; }
+        .btn-save { background: #10b981; color: white; margin-top: 15px; }
+        .btn-print { background: #475569; color: white; margin-top: 8px; font-size: 0.8rem; }
+        
+        button:active { transform: scale(0.98); opacity: 0.9; }
+
+        .results { margin-top: 20px; padding: 20px; background: #064e3b; border-radius: 18px; border: 1px solid var(--success); display: none; animation: fadeIn 0.5s ease; }
+        .results-agar { background: #2e1065; border-color: var(--secondary); }
+        .res-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 1.05rem; }
+        .res-val { font-weight: bold; color: var(--accent); }
+        
+        .cost-tag { color: var(--accent); font-weight: 800; font-size: 1.3rem; text-align: center; margin-top: 15px; padding-top: 10px; border-top: 2px dashed rgba(251, 191, 36, 0.3); }
+
+        #mainApp { display: none; width: 100%; max-width: 500px; }
+        .history { margin-top: 20px; width: 100%; font-size: 0.85rem; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media print { 
+            button, .input-group, .login-screen, .history, h1, .logo-img { display: none !important; }
+            .results { display: block !important; background: white !important; color: black !important; border: 2px solid black; }
+            .res-item { border-bottom: 1px solid #ccc; color: black; }
+            .res-val { color: black; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loginScreen" class="container login-screen">
+        <img src="icon.png" onerror="this.src='https://i.imgur.com/vHqJ9Uj.png'" class="logo-img" alt="Logo">
+        <div class="brand-title">Mavridis Logic</div>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px;">Περιορισμένη Πρόσβαση</p>
+        <div class="input-group">
+            <label>ΚΩΔΙΚΟΣ</label>
+            <input type="password" id="passInput" placeholder="****" inputmode="numeric">
+        </div>
+        <button class="btn-main" onclick="checkPass()">Είσοδος</button>
+    </div>
+
+    <div id="mainApp">
+        <div class="brand-header">
+            <div class="brand-title">Mavridis Soda Pro</div>
+        </div>
+
+        <div class="container">
+            <h2 style="font-size: 1.1rem; color: var(--primary); text-align:center;">ΚΕΝΤΡΙΚΟΣ ΥΠΟΛΟΓΙΣΤΗΣ</h2>
+            <div class="input-group"><label>ΛΙΤΡΑ ΠΑΡΑΓΩΓΗΣ</label><input type="number" id="liters" value="20"></div>
+            <div class="input-group"><label>BRIX ΡΟΔΙ</label><input type="number" id="brixPom" value="30"></div>
+            <div class="input-group"><label>BRIX ΤΣΑΪ+ΜΑΤΕ</label><input type="number" id="brixTea" value="29"></div>
+            <div class="input-group"><label>BRIX ΚΟΛΑ</label><input type="number" id="brixCola" value="26"></div>
+            <div class="input-group"><label>ΚΟΣΤΟΣ ΑΝΑ ΛΙΤΡΟ (€)</label><input type="number" id="costPerL" value="0.45" step="0.01"></div>
+
+            <button class="btn-main" onclick="calculate()">ΥΠΟΛΟΓΙΣΜΟΣ ΣΥΝΤΑΓΗΣ</button>
+
+            <div id="results" class="results">
+                <div class="res-item"><span>Εκχύλισμα Ρόδι:</span> <span class="res-val" id="outPom"></span> ml</div>
+                <div class="res-item"><span>Τσάι + Μάτε:</span> <span class="res-val" id="outTea"></span> ml</div>
+                <div class="res-item"><span>Καρύδη Κόλα:</span> <span class="res-val" id="outCola"></span> ml</div>
+                <div class="res-item"><span>Διάλυμα Τανίνης:</span> <span class="res-val" id="outTan"></span> ml</div>
+                <div class="cost-tag" id="totalCostText"></div>
+                
+                <button class="btn-save" onclick="saveToHistory()">ΑΠΟΘΗΚΕΥΣΗ ΠΑΡΤΙΔΑΣ</button>
+                <button class="btn-print" onclick="window.print()">ΕΚΤΥΠΩΣΗ / PDF</button>
+            </div>
+        </div>
+
+        <div class="container" style="border-color: var(--secondary);">
+            <h2 style="font-size: 1.1rem; color: var(--secondary); text-align:center;">ΔΙΑΥΓΑΣΗ ΧΥΜΟΥ ΛΑΪΜ</h2>
+            <div class="input-group"><label>ML ΧΥΜΟΥ ΛΑΪΜ (ΣΥΝΟΛΟ)</label><input type="number" id="mlJuice" value="300"></div>
+            <button class="btn-agar" onclick="calculateAgar()">ΥΠΟΛΟΓΙΣΜΟΣ ΑΓΑΡ</button>
+            
+            <div id="resultsAgar" class="results results-agar">
+                <div class="res-item"><span>Άγαρ-Άγαρ (0.2%):</span> <span class="res-val" id="outAgar"></span> g</div>
+                <div class="res-item"><span>Βράσιμο (1/4):</span> <span class="res-val" id="outHot"></span> ml</div>
+                <div class="res-item"><span>Κρύο Λάιμ (3/4):</span> <span class="res-val" id="outCold"></span> ml</div>
+                <button class="btn-print" onclick="window.print()">ΕΚΤΥΠΩΣΗ / PDF</button>
+            </div>
+        </div>
+
+        <div class="history container">
+            <h3 style="color: #94a3b8; border-bottom: 1px solid #334155; margin-top:0; font-size: 0.9rem; padding-bottom: 10px;">ΙΣΤΟΡΙΚΟ ΠΑΡΤΙΔΩΝ</h3>
+            <div id="logContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // Κρυπτογραφημένος κωδικός (Base64) για το "1984"
+        const _0x5a1 = "MTk4NA=="; 
+
+        function checkPass() {
+            const input = document.getElementById('passInput').value;
+            if(btoa(input) === _0x5a1) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                renderHistory();
+            } else { 
+                alert("Λάθος Κωδικός!"); 
+            }
+        }
+
+        function calculate() {
+            const mBrix = { cola: 26, tea: 29, pom: 30, tan: 41 };
+            const mMl = { cola: 5, tea: 5, pom: 5, tan: 2 };
+            
+            let L = parseFloat(document.getElementById('liters').value);
+            let costL = parseFloat(document.getElementById('costPerL').value);
+            
+            let bPom = parseFloat(document.getElementById('brixPom').value);
+            let bTea = parseFloat(document.getElementById('brixTea').value);
+            let bCola = parseFloat(document.getElementById('brixCola').value);
+
+            let resPom = (mBrix.pom / bPom) * mMl.pom * (L / 20);
+            let resTea = (mBrix.tea / bTea) * mMl.tea * (L / 20);
+            let resCola = (mBrix.cola / bCola) * mMl.cola * (L / 20);
+            let resTan = 2 * (L / 20);
+
+            document.getElementById('outPom').innerText = resPom.toFixed(2);
+            document.getElementById('outTea').innerText = resTea.toFixed(2);
+            document.getElementById('outCola').innerText = resCola.toFixed(2);
+            document.getElementById('outTan').innerText = resTan.toFixed(2);
+            
+            document.getElementById('totalCostText').innerText = "Συνολικό Κόστος: " + (L * costL).toFixed(2) + "€";
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function calculateAgar() {
+            let ml = parseFloat(document.getElementById('mlJuice').value);
+            document.getElementById('outAgar').innerText = (ml * 0.002).toFixed(2);
+            document.getElementById('outHot').innerText = (ml * 0.25).toFixed(0);
+            document.getElementById('outCold').innerText = (ml * 0.75).toFixed(0);
+            document.getElementById('resultsAgar').style.display = 'block';
+        }
+
+        function saveToHistory() {
+            let log = `Παρτίδα ${document.getElementById('liters').value}L - ${document.getElementById('totalCostText').innerText}`;
+            let history = JSON.parse(localStorage.getItem('mavridisLog') || "[]");
+            history.unshift({date: new Date().toLocaleString('el-GR'), data: log});
+            localStorage.setItem('mavridisLog', JSON.stringify(history.slice(0, 5)));
+            renderHistory();
+            alert("Η παρτίδα αποθηκεύτηκε στο ιστορικό!");
+        }
+
+        function renderHistory() {
+            let history = JSON.parse(localStorage.getItem('mavridisLog') || "[]");
+            document.getElementById('logContainer').innerHTML = history.map(item => `
+                <div style="background:#0f172a; padding:12px; border-radius:12px; margin-top:8px; border-left:4px solid var(--success);">
+                    <span style="color:var(--primary); font-size:0.75rem; font-weight:bold;">${item.date}</span><br>
+                    <span style="font-size:0.9rem;">${item.data}</span>
+                </div>`).join('');
+        }
+
+        document.getElementById('passInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPass();
+        });
+    </script>
+</body>
+</html>
