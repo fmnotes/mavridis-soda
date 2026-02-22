@@ -1,3 +1,10 @@
+Κατάλαβα πού έγινε το μπέρδεμα! Επειδή μέσα στον κώδικα γράφαμε icon.png, ο browser έψαχνε να βρει ένα αρχείο με αυτό το όνομα μέσα στο GitHub σου. Αν το αρχείο δεν είχε ανέβει σωστά ή αν υπήρχε κάποιο θέμα με τη διαδρομή, η φωτογραφία χανόταν.
+
+Για να δουλέψει σίγουρα και να μη χαθεί ποτέ ξανά το ρόδι, σου έφτιαξα τον κώδικα χρησιμοποιώντας το όνομα icon.png όπως το θέλεις, αλλά πρόσθεσα και μια "δικλείδα ασφαλείας".
+
+Αντέγραψε αυτόν τον κώδικα και κάνε την αντικατάσταση στο GitHub:
+
+HTML
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -5,11 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mavridis Soda Pro</title>
 
-    
-
     <link rel="apple-touch-icon" href="icon.png">
-    <link rel="apple-touch-icon-precomposed" href="icon.png">
-
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -18,6 +21,7 @@
         .container { background: #1e293b; width: 100%; max-width: 500px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; margin-bottom: 20px; }
         h1 { color: #38bdf8; text-align: center; font-size: 1.4rem; margin-bottom: 10px; } 
         .login-screen { text-align: center; padding: 40px 20px; }
+        .logo-img { width: 90px; height: 90px; margin-bottom: 20px; border-radius: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); border: 2px solid #38bdf8; object-fit: cover; }
         .input-card { background: #334155; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #475569; }
         label { display: block; font-size: 0.75rem; color: #38bdf8; margin-bottom: 4px; font-weight: bold; }
         input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #1e293b; background: #0f172a; color: white; font-size: 1rem; box-sizing: border-box; }
@@ -36,7 +40,7 @@
 <body>
 
     <div id="loginScreen" class="container login-screen">
-        <img src="https://i.imgur.com/vHqJ9Uj.png" width="90" style="margin-bottom:20px; border-radius:18px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); border: 2px solid #38bdf8;">
+        <img src="icon.png" onerror="this.src='https://i.imgur.com/vHqJ9Uj.png'" class="logo-img">
         <h1>Mavridis Logic</h1>
         <p style="color: #94a3b8; font-size: 0.9rem;">Εισάγετε κωδικό πρόσβασης</p>
         <input type="password" id="passInput" placeholder="****" inputmode="numeric">
